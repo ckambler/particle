@@ -17,7 +17,7 @@ function showLogout(){
 //execute function with possible arguments, and empty argument field.
 function execute(deviceId, func) {
   console.log(deviceId);
-  argument = document.getElementById(func + 'input'); 
+  argument = document.getElementById(func + 'input');
   spark.callFunction(deviceId,func,argument.value,null);
   argument.value = "";
 };
@@ -32,10 +32,10 @@ function update(deviceId, variable) {
 };
 
 //The login button logic from the library. Saves accestoken to LocalStorage.
-sparkLogin(function(data){	
+sparkLogin(function(data){
   document.getElementById('spark-login-button').style.backgroundColor="#00E31A";
   document.getElementById('spark-login-button').innerHTML = 'Logging in, please wait.';
-  console.log(data);		
+  console.log(data);
   access_token = data.access_token;
       localStorage.setItem("access_token", access_token);
       LoggedIn(data);
@@ -104,7 +104,7 @@ xhr.send();
 
 function PhotonUpdate(deviceId, part){
   console.log(deviceId);
-  
+
   if (part == 1){
     blob = blob1;
   }
@@ -117,7 +117,7 @@ function PhotonUpdate(deviceId, part){
       return;
     }
   }
-  
+
   var data = new FormData();
   data.append("file", blob);
   data.append("file_type", "binary");
@@ -132,10 +132,10 @@ function PhotonUpdate(deviceId, part){
 
   xhr.open("PUT", "https://api.spark.io/v1/devices/" + deviceId + '?access_token=' + access_token);
 
-  xhr.send(data);    
-  
+  xhr.send(data);
+
   alert("Your Photon will now be updated. Do NOT press the next update button until your Photon has returned to breathing cyan. This process can take a couple of minutes, during which the LED will blink various colours.");
-  
+
   /* Tried to make the signal work. Didn't really work out. Ignore the stuff below... */
   /*
   var signalCb = function(err, data) {
@@ -145,9 +145,9 @@ function PhotonUpdate(deviceId, part){
       console.log('Core flashing started successfully:', data);
     }
   };
-  
+
   var file;
-  
+
   switch (part){
     case 1:
       file = 'system-part1-0.4.3-photon';
@@ -156,12 +156,12 @@ function PhotonUpdate(deviceId, part){
       file = 'system-part2-0.4.3-photon';
       break;
   }
-  
+
   //spark.signalCore(deviceId, 1, signalCb);
   //spark.renameCore(deviceId, 'test-name', signalCb);
   spark.flashCore('deviceId', ['firmware.bin'], signalCb);
   //spark.flashTinker(deviceId, signalCb);
-  
+
   */
 }
 
@@ -174,7 +174,7 @@ function LoggedIn(data){
   $('#events').append(
     '<a class="btn btn-primary btn-lg btn-block" href="https://api.spark.io/v1/devices/events/?access_token=' + access_token + '" target="_blank">Click here to see your events (opens in a new window)</a>'
   );
-  
+
   devicesAt.then(
     function(data){
       console.log('Core attrs retrieved successfully:', data);
@@ -183,32 +183,32 @@ function LoggedIn(data){
         console.log('- connected?: ' + data[i].connected);
 
         //display status
-        if (data[i].connected == true){ 
+        if (data[i].connected == true){
             status = "online";
-            alerttype = "alert alert-success";				
+            alerttype = "alert alert-success";
         }
         else{
             status = "offline";
             alerttype = "alert alert-danger";
-        }							
-        
-        
-        if ((data[i].productId == 6 || data[i].product_id == 6) && data[i].connected == true){          
+        }
+
+
+        if ((data[i].productId == 6 || data[i].product_id == 6) && data[i].connected == true){
           console.log('THERE\'S A PHOTON IN DA HAUSEEEEEEEE. So yeah, now we can offer an update...');
           console.log(data[i].id);
-          
+
           $('#status tbody').append(
             '<tr class="' + alerttype + '">' +
               '<td><strong>' + data[i].name + '</strong></td>' +
               '<td>' + data[i].id + '</td>' +
-              '<td>' + status + '&nbsp;&nbsp;' + 
+              '<td>' + status + '&nbsp;&nbsp;' +
               '<div class="btn-group" role="group">' +
                 '<button type="button" class="btn btn-warning btn-xs" onclick="PhotonUpdate(\'' + data[i].id + '\', \'1\'); this.disabled=true; this.nextElementSibling.disabled=false;">Update 1</button>' +
                 '<button type="button" class="btn btn-warning btn-xs" disabled onclick="PhotonUpdate(\'' + data[i].id + '\', \'2\'); this.disabled=true; this.nextElementSibling.disabled=false;">Update 2</button>' +
                 '<button type="button" class="btn btn-info btn-xs" onclick="PhotonUpdate(\'' + data[i].id + '\', \'3\'); this.disabled=true;">Tinker</button>' +
-              '</td>' + 
+              '</td>' +
             '</div>' +
-            '</tr>'              
+            '</tr>'
           );
         }
         else {
@@ -217,34 +217,34 @@ function LoggedIn(data){
             '<td>' + data[i].id + '</td>' +
             '<td>' + status + '</td></tr>'
           );
-        }           
+        }
 
-        
-        //display functions	
+
+        //display functions
         console.log('- functions: ' + data[i].functions);
-        if (data[i].functions != null) {	
+        if (data[i].functions != null) {
           for (func in data[i].functions) {
             functionName = data[i].functions[func]
             $('#functions tbody').append(
               '<tr><td><strong>' + data[i].name + '</strong></td>' +
               '<td>' + functionName + '</td>' +
-              //'<td><input class="form-control" type="text" id="' + functionName + '" value=""></td>' +
-              //'<td><button class="btn btn-default form-control"  onclick="execute(\'' + data[i].id + '\', \'' + functionName + '\')">Execute</button></td>' + 
+              '<td><input class="form-control" type="text" id="' + functionName + '" value=""></td>' +
+              '<td><button class="btn btn-default form-control"  onclick="execute(\'' + data[i].id + '\', \'' + functionName + '\')">Execute</button></td>' + 
 
-              '<td><div class="input-group input-group-sm">' + 
+              '<td><div class="input-group input-group-sm">' +
                     '<input type="text" class="form-control" placeholder="Arguments?" id="' + functionName + 'input">'+
                     '<span class="input-group-btn">' +
                       '<button class="btn btn-default" type="button" onclick="execute(\'' + data[i].id + '\', \'' + functionName + '\')">go!</button>'+
                     '</span>'+
                 '</div></td>' +
               '</tr>'
-            );						
+            );
           }
         }
-          
+
         //display variables
-        console.log('- variables: ');			
-        if (data[i].variables != null) {	
+        console.log('- variables: ');
+        if (data[i].variables != null) {
             for (variable in data[i].variables) {
               var type = data[i].variables[variable];
               console.log("variable: " + variable + " type: " + type);
@@ -255,19 +255,19 @@ function LoggedIn(data){
                 //'<td id="' + variable + '">?</td>' +
                 //'<td><button class="btn btn-default form-control" onclick="update(\'' + data[i].id + '\', \'' + variable + '\')">Update</button></td></tr>'
 
-                '<td><div class="input-group input-group-sm">' + 
+                '<td><div class="input-group input-group-sm">' +
                       '<input type="text" class="form-control" placeholder="Click Get!" readonly id="' + variable + data[i].id + '">' +
                       '<span class="input-group-btn">' +
                         '<button class="btn btn-default" type="button" onclick="update(\'' + data[i].id + '\', \'' + variable + '\')">Get!</button>' +
                       '</span>' +
                   '</div></td>' +
                 '</tr>'
-              );						
+              );
             }
         }
-        
-        
-        
+
+
+
 
         console.log("\n");
       }
@@ -277,18 +277,18 @@ function LoggedIn(data){
           'These updates can take several minutes each. Click them only ONCE! WAIT UNTIL YOUR DEVICE IS BACK TO BREATHING CYAN! Only after updating your Photon to the latest version will the Tinker firmware work. Do not attempt to flashing that beforehand, for it will not work.</td>' +
         '</tr>'
       );
-      
+
       $('#functions').show();
       $('#variables').show();
       $('#status').show();
       $('#events').show();
       showLogout();
-      
-      
-      
+
+
+
     },
     function(err) {
       console.log('API call failed: ', err);
     }
-  );	
+  );
 };
