@@ -89,8 +89,8 @@ function LoggedIn(data){
             $('#functions tbody').append(
               '<tr><td><strong>' + data[i].name + '</strong></td>' +
               '<td>' + functionName + '</td>' +
-              //'<td><input class="form-control" type="text" id="' + functionName + '" value=""></td>' +
               '<td><button class="btn btn-default form-control"  onclick="execute(\'' + data[i].id + '\', \'' + functionName + '\')">Execute</button></td>' +
+              '<td><input class="form-control" type="text" id="' + functionName + '" value=""></td>' +
 
               // '<td><div class="input-group input-group-sm">' +
               // '<input type="text" class="form-control" placeholder="Arguments?" id="' + functionName + 'input">'+
