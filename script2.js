@@ -90,14 +90,14 @@ function LoggedIn(data){
               '<tr><td><strong>' + data[i].name + '</strong></td>' +
               '<td>' + functionName + '</td>' +
               //'<td><input class="form-control" type="text" id="' + functionName + '" value=""></td>' +
-              //'<td><button class="btn btn-default form-control"  onclick="execute(\'' + data[i].id + '\', \'' + functionName + '\')">Execute</button></td>' +
+              '<td><button class="btn btn-default form-control"  onclick="execute(\'' + data[i].id + '\', \'' + functionName + '\')">Execute</button></td>' +
 
-              '<td><div class="input-group input-group-sm">' +
-              '<input type="text" class="form-control" placeholder="Arguments?" id="' + functionName + 'input">'+
-              '<span class="input-group-btn">' +
-              '<button class="btn btn-default" type="button" onclick="execute(\'' + data[i].id + '\', \'' + functionName + '\')">go!</button>'+
-              '</span>'+
-              '</div></td>' +
+              // '<td><div class="input-group input-group-sm">' +
+              // '<input type="text" class="form-control" placeholder="Arguments?" id="' + functionName + 'input">'+
+              // '<span class="input-group-btn">' +
+              // '<button class="btn btn-default" type="button" onclick="execute(\'' + data[i].id + '\', \'' + functionName + '\')">go!</button>'+
+              // '</span>'+
+              // '</div></td>' +
               '</tr>'
             );
           }
