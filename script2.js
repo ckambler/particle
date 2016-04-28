@@ -77,7 +77,7 @@ function LoggedIn(data){
         }
         $('#status tbody').append(
           '<tr class="' + alert + '"><td><strong>' + data[i].name + '</strong></td>' +
-          '<td>' + data[i].id + '</td>' +
+          // '<td>' + data[i].id + '</td>' +
           '<td>' + status + '</td></tr>'
         );
 
@@ -96,7 +96,7 @@ function LoggedIn(data){
               '<span class="input-group-btn">' +
               '<button class="btn btn-default" type="button" onclick="execute(\'' + data[i].id + '\', \'' + functionName + '\')">go!</button>'+
               '</span>'+
-              '<input type="text" class="form-control" placeholder="Arguments?" id="' + functionName + 'input">'+
+              '<input type="hidden" class="form-control" placeholder="Arguments?" id="' + functionName + 'input">'+
               '</div></td>' +
               '</tr>'
             );
